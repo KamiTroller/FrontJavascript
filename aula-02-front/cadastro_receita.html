@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>cadastro receita</title>
+</head>
+
+<body>
+
+    <h1>Cadastre sua receita</h1>
+    <hr />
+    <br />
+
+    <form>
+        <label>Nome da Receita</label>
+        <input type="text" placeholder="Digite..." id="nomeReceita" />
+
+        <label>Descrição da Receita</label>
+        <textarea id="descricaoReceita"></textarea>
+
+        <button type="button" id="btn-enviarReceita">Enviar Receita</button>
+    </form>
+
+    <div id="lista-receitas">
+        <p>Nome da Receia - Descrição da Receita</p>
+    </div>
+</body>
+
+<script>
+    const btnEnviar = document.getElementById("btn-enviarReceita");
+
+    btnEnviar.addEventListener("click", criarReceita);
+
+    function criarReceita() {
+        const nomeReceita = document.getElementById("nomeReceita");
+        const descricaoReceita = document.getElementById("descricaoReceita");
+
+        const listReceitas = document.getElementById("lista-receitas");
+
+        const divP = document.createElement("p");
+        divP.textContent = nomeReceita.value + " - " + descricaoReceita.value;
+
+        listReceitas.appendChild(divP);
+    }
+</script>
+
+</html>

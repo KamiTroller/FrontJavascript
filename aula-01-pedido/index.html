@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-sacale=1.0" />
+
+    <title>Pedido</title>
+</head>
+<style>
+    body {
+        text-align: center;
+    }
+
+    .container {
+        position: relative;
+        width: 100vw;
+        height: 80vh;
+        overflow: hidden;
+    }
+
+    .simBtn {
+        background-color: green;
+        color: white;
+        padding: 10px;
+        width: 150px;
+        border-radius: 10px;
+    }
+
+    .naoBtn {
+        position: absolute;
+
+        background-color: red;
+        color: white;
+        padding: 10px;
+        width: 150px;
+        border-radius: 10px;
+    }
+</style>
+
+<body>
+    <h1>Vamos programar hoje ?</h1>
+
+    <div class="container" id="container">
+        <button class="simBtn" id="simBtn">Sim</button>
+        <button class="naoBtn" id="naoBtn">Não</button>
+    </div>
+</body>
+<script>
+    const simBtn = document.getElementById("simBtn");
+
+    simBtn.addEventListener("click", function () {
+        alert("Opaa! vamos programar hoje!!!");
+    });
+
+    const botaoNao = document.getElementById("naoBtn");
+    const container = document.getElementById("container");
+
+
+    container.addEventListener("mousemove", function (event) {
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+
+        //Coordenadas e dimensão do botão
+        const rect = botaoNao.getBoundingClientRect();
+        //Lateral + tamanho / metade
+        const buttonX = rect.left + rect.width / 2;
+        const buttonY = rect.top + rect.height / 2;
+
+        //Distancia entre o mouse e o centro do botão
+        const distanceX = mouseX - buttonX;
+        const distanceY = mouseY - buttonY;
+
+        //Math.sqrt -> raiz quadrada
+        //** -> distance2
+
+        const distance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
+
+        if (distance < 100) {
+            //Math.random = gera numero aleatorio
+            const newTop = Math.random() * (container.offsetHeight - botaoNao.offsetHeight);
+            const newLeft = Math.random() * (container.offsetWidth - botaoNao.offsetWidth);
+
+            botaoNao.style.top = `${newTop}px`;
+            botaoNao.style.left = `${newLeft}px`;
+        }
+
+    });
+</script>
+
+</html>
