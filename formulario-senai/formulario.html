@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova - SENAI</title>
+</head>
+
+<body>
+
+    <h1>Prova de 30 minutos ( Teste de Tecnologia )</h1>
+
+    <div id="timer">Tempo restante: 30:00</div>
+
+    <form id="quizForm">
+
+        <fieldset data-questions="q1">
+            <legend>Qual a capital do Brasil?</legend>
+
+            <label>
+                <input type="radio" name="q1" value="Brasília" />
+                Brasília
+            </label>
+
+            <label>
+                <input type="radio" name="q1" value="Rio de Janeiro" />
+                Rio de Janeiro
+            </label>
+
+            <label>
+                <input type="radio" name="q1" value="São Paulo" />
+                São Paulo
+            </label>
+
+        </fieldset>
+
+        <button type="button" id="btnEnviar">Enviar Formulário</button>
+    </form>
+
+    <div id="resultado"></div>
+
+</body>
+
+<script>
+    let tempoRestante = 1800;
+
+    const timerEl = document.getElementById("timer");
+    const btnEnviar = document.getElementById("btnEnviar");
+    const formQuiz = document.getElementById("quizForm");
+    const resultadoEl = document.getElementById("resultado");
+
+    const respostasCorretas = {
+        q1: 'Brasília'
+    }
+
+    function formatarTempo(segundos) {
+        const minutos = Math.floor(segundos / 60);
+        const segRestantes = segundos % 60;
+
+        const minFormatado = String(minutos).padStart(2, '0');
+
+        const segFormatado = String(segRestantes).padStart(2, '0');
+
+        return `${minFormatado}:${segFormatado}`;
+    }
+
+    const intervaloTimer = setInterval(() => {
+        tempoRestante--;
+
+        timerEl.textContent = `Tempo restante: ${formatarTempo(tempoRestante)}`;
+
+        if (tempoRestante <= 0) {
+            clearInterval(intervaloTimer);
+            timerEl.textContent = 'Tempo esgotado';
+            finalizarQuiz();
+        }
+    }, 1000);
+
+    function finalizarQuiz() {
+        btnEnviar.disabled = true;
+
+        const inputs = formQuiz.querySelectorAll('input[type="radio"]');
+
+        inputs.forEach((input) => {
+            input.disabled = true;
+        });
+
+        avaliarRespostas();
+    }
+
+    function avaliarRespostas() {
+        let acertos = 0;
+        let erros = 0;
+
+        for (const questao in respostasCorretas) {
+            const selecionado = formQuiz[questao].value;
+
+            const fieldset = formQuiz.querySelector(`fieldset[data-question="${questao}"]`);
+
+            if (selecionado === respostasCorretas[questao] ) {
+                acertos++;
+            } else {
+                erros++;
+            }
+        }
+
+        resultadoEl.textContent = `Você acertou ${acertos} e errou ${erros} questões`;
+    }
+
+    btnEnviar.addEventListener('click', () => {
+        clearInterval(intervaloTimer);
+        finalizarQuiz();
+    });
+
+
+
+
+</script>
+
+</html>
